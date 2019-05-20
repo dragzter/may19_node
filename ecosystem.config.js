@@ -1,7 +1,7 @@
 module.exports = {
     apps: [{
-      name: 'tutorial-2',
-      script: '/server/index.js'
+      name: 'may19',
+      script: './index.js'
     }],
     deploy: {
       production: {
@@ -10,7 +10,7 @@ module.exports = {
         key: '~/.ssh/may_19_2019.pem',
         ref: 'origin/master',
         repo: 'git@github.com:dragzter/may19_node.git',
-        path: '/home/ubuntu/test',
+        path: '/home/ubuntu/may19_node_app',
         'post-deploy': 'npm install && pm2 startOrRestart ecosystem.config.js'
       }
     }
