@@ -21,7 +21,7 @@
   "homepage": "https://github.com/dragzter/may19_node#readme",
   "dependencies": {
     "express": "^4.17.0",
-    "mongoose": "^5.5.9"
+    "mongoose": "^5.5.10"
   },
   "devDependencies": {
     "pm2": "^3.5.0"
