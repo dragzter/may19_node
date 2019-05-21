@@ -2,12 +2,9 @@ const express = require('express')
 const app = express()
 
 // Routes
-let personRoute = require('server/routes/person')
+let personRoute = require('./server/routes/person')
 
 app.use(personRoute)
-
-
-
 
 // Serve the static content
 app.use(express.static('public'))
