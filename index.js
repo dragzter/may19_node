@@ -3,16 +3,24 @@ const app = express()
 
 // Routes
 let personRoute = require('./server/routes/person')
+let customerRoute = require('./server/routes/customer')
+
 let path = require('path')
+
+let bodyParser = require('body-parser')
+
+app.use(bodyParser.json())
+
 
 // Middleware chain
 app.use((req, res, next) => {
-    console.log(`${new Date().toString()} => ${req.originalUrl}`)
+    console.log(`${new Date().toString()} => ${req.originalUrl}`, req.body)
 
     next()
 })
 
 app.use(personRoute)
+app.use(customerRoute)
 app.use(express.static('public'))
 
 // 404 - Not Found
