@@ -1,15 +1,17 @@
 let mongoose = require('mongoose')
+let creds = require('./db-cred')
 
-const server = 'cluster0-cck6j.mongodb.net'
-const user = 'vlad'
-const password = 'may19node'
-const database = 'test'
+const server = creds.server
+const user = creds.user
+const password = creds.password
+const database = creds.database
 
 mongoose.connect(`mongodb+srv://${user}:${password}@${server}/${database}?retryWrites=true`)
 
 
 let CustomerSchema = new mongoose.Schema({
     name: String,
+    color: String,
     email: {
         type: String,
         require: true,

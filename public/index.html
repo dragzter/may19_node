@@ -1,9 +1,153 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Erm hey.</title>
+    <title>Basic form Submit</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
   </head>
   <body>
-    <img src="https://media.giphy.com/media/3o6Zt7aSSZLX6U5WtW/source.gif">
+
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <a class="navbar-brand" href="#">Navbar</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <!-- <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Features</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Pricing</a>
+              </li> -->
+            </ul>
+          </div>
+        </nav>
+
+        <div class="container mt-5">
+            <div class="jumbotron">
+                <h1 class="display-4">Node/Express API test project</h1>
+                <p class="lead">The top form submits data to the database.  The bottom form retrieves a record by email (providing you supply a valid email).</p>
+
+
+            </div>
+        </div>
+
+        <div class="container mt-5">
+          <div class="row">
+            <div class="col-md-12">
+                <h2>Post Data</h2>
+
+                <form id="submit_form" action="/customer" method="POST">
+                  <div class="form-group">
+                    <label for="formGroupExampleInput">Name</label>
+                    <input id="name" name="name" type="text" class="form-control"  placeholder="name">
+                  </div>
+                  <div class="form-group">
+                    <label for="formGroupExampleInput2">Email</label>
+                    <input id="email" name="email" class="form-control" placeholder="Email">
+                  </div>
+                  <div class="form-group">
+                      <label for="formGroupExampleInput2">Color</label>
+                      <input id="color" name="color" class="form-control" placeholder="Color">
+                  </div>
+                  <div class="form-group">
+                      <button type="submit" name="email" class="btn btn-primary">Submit</button>
+                  </div>
+                </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="container mt-5">
+            <div class="row">
+              <div class="col-md-12">
+                  <h2>Get By Email</h2>
+                  <form id="submit_form_get" action="/customer" method="GET">
+
+                    <div class="form-group">
+                      <label for="formGroupExampleInput2">Email</label>
+                      <input id="get_email_input" name="email" class="form-control" placeholder="Email">
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" name="email" class="btn btn-primary">Submit</button>
+                    </div>
+                  </form>
+              </div>
+              <div class="col-md-12">
+                <div id="get_email"></div>
+              </div>
+            </div>
+          </div>
+
+    <!-- JS -->
+    <script>
+      // Post
+      $('#submit_form').submit(function(e){
+
+        function getFormData($form){
+            var unindexed_array = $form.serializeArray();
+            var indexed_array = {};
+
+            $.map(unindexed_array, function(n, i){
+                indexed_array[n['name']] = n['value'];
+            });
+            return indexed_array;
+        }
+
+        var $form = $(this);
+        var data = JSON.stringify(getFormData($form));
+        
+        e.preventDefault()
+
+        $.ajax({
+          async: true,
+          crossDomain: true,
+          url: $(this).attr('action'),
+          type: $(this).attr('method'),
+          dataType: "json",
+          headers: {
+            "content-type": "application/json"
+          },
+          data: data,
+
+        }).done(res => {
+          console.log(res)
+          
+        })
+      })
+
+      // Get
+      $("#submit_form_get").submit(function(e) {
+        e.preventDefault()
+
+        $.ajax({
+          async: true,
+          crossDomain: true,
+          url: $(this).attr('action'),
+          type: $(this).attr('method'),
+          dataType: "json",
+          headers: {
+            "content-type": "application/json"
+          },
+          data: $(this).serialize()
+        }).done(res => {
+          console.log(res)
+          if (res) {
+            $('#get_email').html(`Name: ${res.name},<br> Email: ${res.email}, <br> Color: ${res.color || "no color specified"}` )
+          } else {
+            $('#get_email').text('No record with that email')
+          }
+        })
+
+      })
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </body>
 </html>

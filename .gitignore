@@ -1,2 +1,3 @@
 .DS_Store
 node_modules
+server/models/db-cred.js

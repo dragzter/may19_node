@@ -10,11 +10,6 @@ router.post('/customer', (req, res) => {
         return res.status(400).send('Request body is missing')
     }
 
-    // let user = {
-    //     name: 'firstname lastname',
-    //     email: 'email@gmail.com'
-    // }
-
     let model = new CustomerModel(req.body)
     model.save()
         .then(doc => {
@@ -23,6 +18,7 @@ router.post('/customer', (req, res) => {
             }
 
             res.status(201).send(doc)
+            
         })
           .catch(err => {
               res.status(500).json(err)
